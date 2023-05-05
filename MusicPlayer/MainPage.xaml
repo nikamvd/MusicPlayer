@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:mediaElementCore="clr-namespace:CommunityToolkit.Maui.Core.Primitives;assembly=CommunityToolkit.Maui.MediaElement"
+             xmlns:controls="clr-namespace:MusicPlayer.Controls"
+             xmlns:converters="clr-namespace:MusicPlayer.Converters"
+             Shell.NavBarIsVisible="False"
+             x:Class="MusicPlayer.MainPage" BackgroundImageSource="potrait.png">
+    <ContentPage.Resources>
+        <toolkit:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
+        <converters:SecondsToStringConverter x:Key="secondsToStringConverter" />
+    </ContentPage.Resources>
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <controls:SongPlayer x:Name="songPlayer" Source="{Binding SelectedSong.SongUrl}" PlayOrPauseCommand="{Binding Source={x:Reference Name=btnPlay}, Path=Command}"
+                             DragStartedCommand="{Binding Source={x:Reference Name=durationSlider}, Path=DragStartedCommand}"
+                             DragCompletedCommand="{Binding Source={x:Reference Name=durationSlider}, Path=DragCompletedCommand}"
+                             SliderPosition="{Binding Source={x:Reference Name=durationSlider}, Path=Value}" IsVisible="False">
+        </controls:SongPlayer>
+        <toolkit:AvatarView Grid.Row="1" Grid.Column="1"
+                            ImageSource="{Binding SelectedSong.PictureUrl}"
+                            HeightRequest="{Binding AvatarHeight, Mode=OneWay}"
+                            WidthRequest="{Binding AvatarHeight, Mode=OneWay}"
+                            CornerRadius="{Binding AvatarCornerRadius, Mode=OneWay}" />
+
+        <VerticalStackLayout x:Name="stackDetails" Grid.Row="3" Grid.Column="1"
+                             HorizontalOptions="Center" Spacing="5">
+            <Label Text="{Binding SelectedSong.FilmName}" TextColor="White" FontFamily="Roboto" FontSize="25" FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
+            <Slider x:Name="durationSlider" ThumbColor="White" MinimumTrackColor="White" MaximumTrackColor="#01604B"
+                    Value="{Binding Source={x:Reference Name=songPlayer}, Path=Position, Converter={StaticResource TimeSpanConverter}, Mode=TwoWay}"
+                    Maximum="{Binding Source={x:Reference Name=songPlayer}, Path=Duration, Converter={StaticResource TimeSpanConverter}, Mode=TwoWay}">
+            </Slider>
+            <Grid HorizontalOptions="Fill" VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label BindingContext="{x:Reference durationSlider}" TextColor="White" FontFamily="Roboto"
+                       FontSize="15" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Start">
+                    <Label.Text>
+                        <MultiBinding Converter="{StaticResource secondsToStringConverter}">
+                            <Binding Source="{x:Static converters:Format.CurrentTime}" />
+                            <Binding Path="Value" />
+                            <Binding Path="Maximum" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label BindingContext="{x:Reference durationSlider}" TextColor="White" FontFamily="Roboto"
+                       FontSize="15" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Start">
+                    <Label.Text>
+                        <MultiBinding Converter="{StaticResource secondsToStringConverter}">
+                            <Binding Source="{x:Static converters:Format.RemainingTime}" />
+                            <Binding Path="Value" />
+                            <Binding Path="Maximum" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </Grid>
+            <Label x:Name="lblSongName" Text="{Binding SelectedSong.SongName}" TextColor="White" FontFamily="Roboto" FontSize="15" HorizontalTextAlignment="Center"></Label>
+        </VerticalStackLayout>
+        <HorizontalStackLayout Grid.Row="5" Grid.Column="1" HorizontalOptions="Center" BindingContext="{x:Reference songPlayer}">
+            <HorizontalStackLayout Spacing="10">
+                <ImageButton Source="repeat.png"></ImageButton>
+                <ImageButton Source="prev.png"></ImageButton>
+            </HorizontalStackLayout>
+            <ImageButton x:Name="btnPlay" Source="play.png">
+                <ImageButton.Triggers>
+                    <DataTrigger TargetType="ImageButton"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static mediaElementCore:MediaElementState.Playing}">
+                        <Setter Property="Source"
+                                Value="pause.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="ImageButton"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static mediaElementCore:MediaElementState.Paused}">
+                        <Setter Property="Source"
+                                Value="play.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="ImageButton"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static mediaElementCore:MediaElementState.Stopped}">
+                        <Setter Property="Source"
+                                Value="play.png" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="ImageButton"
+                                 Binding="{Binding CurrentState}"
+                                 Value="{x:Static mediaElementCore:MediaElementState.Buffering}">
+                        <Setter Property="IsEnabled"
+                                Value="False" />
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
+            <HorizontalStackLayout Spacing="10">
+                <ImageButton Source="next.png"></ImageButton>
+                <ImageButton Source="volume.png"></ImageButton>
+            </HorizontalStackLayout>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
+
