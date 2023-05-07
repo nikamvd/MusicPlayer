@@ -4,9 +4,12 @@ namespace MusicPlayer.ViewModels
 {
 	public class PlayerViewModel : BaseViewModel
     {
-		public PlayerViewModel(Song selectedSong)
+        public PlayerViewModel() : this(new Song(), new List<Song>() { new Song() }) { }
+
+        public PlayerViewModel(Song selectedSong, List<Song> songs)
 		{
             SelectedSong = selectedSong;
+            Songs = songs;
         }
 
         private Song _selectedSong;
@@ -14,6 +17,13 @@ namespace MusicPlayer.ViewModels
         {
             get => _selectedSong;
             set { SetProperty(ref _selectedSong, value); }
+        }
+
+        private List<Song> _songs;
+        public List<Song> Songs
+        {
+            get => _songs;
+            set { SetProperty(ref _songs, value); }
         }
 
         private double _avatarHeight;
