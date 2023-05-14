@@ -80,6 +80,9 @@
 	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Constants\" />
 	  <None Remove="Base\" />
+	  <None Remove="Pages\" />
+	  <None Remove="Resources\Images\playpink.png" />
+	  <None Remove="Resources\Images\back.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\" />
@@ -89,5 +92,19 @@
 	  <Folder Include="Converters\" />
 	  <Folder Include="Constants\" />
 	  <Folder Include="Base\" />
+	  <Folder Include="Pages\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiXaml Update="Pages\SongsListPage.xaml">
+	    <SubType></SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\PlayerViewPage.xaml">
+	    <SubType></SubType>
+	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Styles\SongsStyles.xaml" />
+	  <BundleResource Include="Resources\Images\playpink.png" />
+	  <BundleResource Include="Resources\Images\back.png" />
 	</ItemGroup>
 </Project>

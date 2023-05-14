@@ -14,6 +14,12 @@ namespace MusicPlayer.Controls
             PlayOrPauseCommand = new Command(ExecutePlayOrPauseCommand);
             DragStartedCommand = new Command(ExecuteDragStartedCommand);
             DragCompletedCommand = new Command(ExecuteDragCompletedCommand);
+            DisconnectCommand = new Command(ExecuteDisconnectCommand);
+        }
+
+        private void ExecuteDisconnectCommand(object obj)
+        {
+            Handler?.DisconnectHandler();
         }
 
         private void ExecuteDragCompletedCommand(object obj)
@@ -52,7 +58,7 @@ namespace MusicPlayer.Controls
                 BindableProperty.Create(nameof(PlayOrPauseCommand), typeof(ICommand), typeof(SongPlayer), null, BindingMode.OneWayToSource);
 
         /// <summary>
-        /// SelectedDateChangedCommand - Backed by Bindable Command SelectedDateChangedCommandProperty
+        /// PlayOrPauseCommand - Backed by Bindable Command PlayOrPauseCommandProperty
         /// </summary>
         public ICommand PlayOrPauseCommand
         {
@@ -103,6 +109,21 @@ namespace MusicPlayer.Controls
         {
             get { return (double)GetValue(SliderPositionProperty); }
             set { SetValue(SliderPositionProperty, value); }
+        }
+
+        /// <summary>
+        /// Bindable Command to handle Disconnect MediaElement
+        /// </summary>
+        public static BindableProperty DisconnectCommandProperty =
+                BindableProperty.Create(nameof(DisconnectCommand), typeof(ICommand), typeof(SongPlayer), null, BindingMode.OneWayToSource);
+
+        /// <summary>
+        /// DisconnectCommand - Backed by Bindable Command DisconnectCommandProperty
+        /// </summary>
+        public ICommand DisconnectCommand
+        {
+            get { return (ICommand)GetValue(DisconnectCommandProperty); }
+            set { SetValue(DisconnectCommandProperty, value); }
         }
     }
 }

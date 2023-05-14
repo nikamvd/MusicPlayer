@@ -4,6 +4,7 @@ using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
 using MusicPlayer.ViewModels;
 using MusicPlayer.Models;
+using MusicPlayer.Services;
 
 namespace MusicPlayer;
 
@@ -22,19 +23,34 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			})
-            .RegisterViewModels();
+            .RegisterAppServices()
+            .RegisterViewModels()
+            .RegisterViews();
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
 		return builder.Build();
 	}
 
+    public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
+    {
+        mauiAppBuilder.Services.AddSingleton<ISongsService, SongsService>();
+        mauiAppBuilder.Services.AddSingleton<IHttpClientProvider, HttpClientProvider>();
+
+        return mauiAppBuilder;
+    }
+
     public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
     {
-        mauiAppBuilder.Services.AddSingleton<PlayerViewModel>();
-        mauiAppBuilder.Services.AddSingleton<Song>();
+        mauiAppBuilder.Services.AddSingleton<SongsListViewModel>();
+
+        return mauiAppBuilder;
+    }
+
+    public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
+    {
         return mauiAppBuilder;
     }
 }

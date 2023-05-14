@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <Style x:Key="BaseLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Lato" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextColor" Value="{StaticResource Color_SecondaryGrey}" />
+    </Style>
+
+    <!--Songs List Styles-->
+    <Style x:Key="Label_SongName" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10,-10,0,0" />
+    </Style>
+    <Style x:Key="Label_FilmName" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10,10,0,0" />
+        <Setter Property="TextColor" Value="{StaticResource Color_ElementGrey}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+    <Style x:Key="BoxView_Separator" TargetType="BoxView">
+        <Setter Property="Color" Value="{StaticResource Color_LightGrey}" />
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+    <Style x:Key="AvatarView_Poster" TargetType="toolkit:AvatarView">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="80" />
+        <Setter Property="WidthRequest" Value="80" />
+        <Setter Property="CornerRadius" Value="40" />
+    </Style>
+</ResourceDictionary>

@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using MusicPlayer.Base;
 using MusicPlayer.Models;
+using MusicPlayer.Pages;
 using MusicPlayer.Services;
 
 namespace MusicPlayer.ViewModels
@@ -31,11 +32,11 @@ namespace MusicPlayer.ViewModels
                 return;
             }
 
-            //ProfileViewPage profileViewPage = new ProfileViewPage()
-            //{
-            //    BindingContext = new PlayerViewModel(selectedSong, Songs)
-            //};
-            //await Navigation.PushAsync(profileViewPage, false);
+            PlayerViewPage playerViewPage = new PlayerViewPage()
+            {
+                BindingContext = new PlayerViewModel(selectedSong, Songs)
+            };
+            await Navigation.PushAsync(playerViewPage, false);
             SelectedSong = null;
         }
 

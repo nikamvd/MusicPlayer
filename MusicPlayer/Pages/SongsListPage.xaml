@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:MusicPlayer.Base"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MusicPlayer.Pages.SongsListPage"
+             Title="Select a Song">
+    <!--<Shell.TitleView>
+      <HorizontalStackLayout VerticalOptions="Fill">
+        <Label
+          Text="Select a Song"
+          TextColor="White" />
+      </HorizontalStackLayout>
+    </Shell.TitleView>-->
+
+    <VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding Songs}" SelectionMode="Single"
+                            SelectedItem="{Binding SelectedSong}"
+                            SelectionChangedCommand="{Binding SongSelectedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5" VerticalOptions="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <toolkit:AvatarView Grid.Row="0" Grid.RowSpan="2" Style="{StaticResource AvatarView_Poster}"
+                            ImageSource="{Binding PictureUrl}" WidthRequest="80" HeightRequest="80" CornerRadius="40" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding SongName}" Style="{StaticResource Label_FilmName}" />
+                            <!--<Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Source="playpink.png" Margin="0,0,15,0"/>-->
+
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding FilmName}" Style="{StaticResource Label_SongName}" />
+                        
+                            <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxView_Separator}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+    </VerticalStackLayout>
+</base:BaseContentPage>

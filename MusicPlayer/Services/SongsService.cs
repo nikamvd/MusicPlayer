@@ -39,8 +39,12 @@ namespace MusicPlayer.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseData = response.Content == null ? null : await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var songs = JsonSerializer.Deserialize<IEnumerable<Song>>(responseData);
-                    return songs;
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    var songsCollection = JsonSerializer.Deserialize<SongsCollection>(responseData, options);
+                    return songsCollection.Songs;
                 }
                 else
                 {

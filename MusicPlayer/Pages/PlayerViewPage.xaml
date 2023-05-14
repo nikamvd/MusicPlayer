@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<base:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:MusicPlayer.Base"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:mediaElementCore="clr-namespace:CommunityToolkit.Maui.Core.Primitives;assembly=CommunityToolkit.Maui.MediaElement"
              xmlns:controls="clr-namespace:MusicPlayer.Controls"
              xmlns:converters="clr-namespace:MusicPlayer.Converters"
              Shell.NavBarIsVisible="False"
              BackgroundImageSource="potrait.png"
-             x:Class="MusicPlayer.MainPage">
+             x:Class="MusicPlayer.Pages.PlayerViewPage">
     <ContentPage.Resources>
         <toolkit:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
         <converters:SecondsToStringConverter x:Key="secondsToStringConverter" />
@@ -31,14 +32,15 @@
         <controls:SongPlayer x:Name="songPlayer" Source="{Binding SelectedSong.SongUrl}" PlayOrPauseCommand="{Binding Source={x:Reference Name=btnPlay}, Path=Command}"
                              DragStartedCommand="{Binding Source={x:Reference Name=durationSlider}, Path=DragStartedCommand}"
                              DragCompletedCommand="{Binding Source={x:Reference Name=durationSlider}, Path=DragCompletedCommand}"
-                             SliderPosition="{Binding Source={x:Reference Name=durationSlider}, Path=Value}" IsVisible="False">
+                             SliderPosition="{Binding Source={x:Reference Name=durationSlider}, Path=Value}" IsVisible="False"
+                             DisconnectCommand="{Binding DisconnectCommand}">
         </controls:SongPlayer>
+        <ImageButton Grid.Row="0" Grid.Column="1" Source="back.png" HorizontalOptions="Start" Command="{Binding BackCommand}"></ImageButton>
         <toolkit:AvatarView Grid.Row="1" Grid.Column="1"
                             ImageSource="{Binding SelectedSong.PictureUrl}"
                             HeightRequest="{Binding AvatarHeight, Mode=OneWay}"
                             WidthRequest="{Binding AvatarHeight, Mode=OneWay}"
                             CornerRadius="{Binding AvatarCornerRadius, Mode=OneWay}" />
-
         <VerticalStackLayout x:Name="stackDetails" Grid.Row="3" Grid.Column="1"
                              HorizontalOptions="FillAndExpand" Spacing="5">
             <Label Text="{Binding SelectedSong.FilmName}" TextColor="White" FontFamily="Roboto" FontSize="25" FontAttributes="Bold" HorizontalTextAlignment="Center"></Label>
@@ -113,5 +115,4 @@
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>
-</ContentPage>
-
+</base:BaseContentPage>

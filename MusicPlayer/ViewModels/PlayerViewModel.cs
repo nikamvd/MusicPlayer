@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Windows.Input;
 using MusicPlayer.Models;
+using MusicPlayer.Base;
+
 namespace MusicPlayer.ViewModels
 {
-	public class PlayerViewModel : BaseViewModel
+	public class PlayerViewModel : BaseViewModel, ILazyNavigator, IMonitorAppearance
     {
         public PlayerViewModel() : this(new Song(), new List<Song>() { new Song() }) { }
 
@@ -10,6 +13,7 @@ namespace MusicPlayer.ViewModels
 		{
             SelectedSong = selectedSong;
             Songs = songs;
+            BackCommand = new Command(async () => await NavigateBack());
         }
 
         private Song _selectedSong;
@@ -45,6 +49,37 @@ namespace MusicPlayer.ViewModels
         {
             get => _avatarWidth;
             set { SetProperty(ref _avatarWidth, value); }
+        }
+
+        public INavigation Navigation { get; set; }
+
+        private ICommand _backCommand;
+        public ICommand BackCommand
+        {
+            get => _backCommand;
+            set { SetProperty(ref _backCommand, value); }
+        }
+
+        private async Task NavigateBack()
+        {
+            await Navigation?.PopAsync(false);
+        }
+
+        public void OnAppearing()
+        {
+            
+        }
+
+        public void OnDisappearing()
+        {
+            DisconnectCommand.Execute(null);
+        }
+
+        private ICommand _disconnectCommand;
+        public ICommand DisconnectCommand
+        {
+            get => _disconnectCommand;
+            set { SetProperty(ref _disconnectCommand, value); }
         }
     }
 }
