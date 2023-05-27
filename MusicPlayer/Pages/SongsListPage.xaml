@@ -9,8 +9,13 @@
     <Page.Behaviors>
         <mctBehaviors:StatusBarBehavior StatusBarColor="#FE43AB"></mctBehaviors:StatusBarBehavior>
     </Page.Behaviors>
-    <VerticalStackLayout>
-        <CollectionView ItemsSource="{Binding Songs}" SelectionMode="Single"
+    <VerticalStackLayout Spacing="20">
+        <!--<SearchBar x:Name="searchBar" BackgroundColor="White" Placeholder="search by song or film"
+                   SearchCommand="{Binding SearchSong}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>-->
+        <SearchBar BackgroundColor="White" Placeholder="search by song or film"
+                   Text="{Binding SearchText, Mode=TwoWay}" />
+        <CollectionView ItemsSource="{Binding FilteredSongs}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedSong}"
                             SelectionChangedCommand="{Binding SongSelectedCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">

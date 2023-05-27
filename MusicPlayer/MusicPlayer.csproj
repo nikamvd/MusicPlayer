@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>MusicPlayer</ApplicationTitle>
+		<ApplicationTitle>Music Box</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.musicplayer</ApplicationId>
@@ -38,12 +38,14 @@
 	  <CreatePackage>false</CreatePackage>
 	  <CodesignKey>iPhone Developer</CodesignKey>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios16.2|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	  <CodesignKey>iPhone Developer</CodesignKey>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
-		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" ForegroundFile="Resources\AppIcon\splash1.png" />
+		<MauiSplashScreen Include="Resources\Splash\splash1.png" Color="#FE43AB" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -51,7 +53,6 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-		<MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,7 +83,6 @@
 	  <None Remove="Resources\Images\prev.png" />
 	  <None Remove="Controls\" />
 	  <None Remove="Converters\" />
-	  <None Remove="Resources\AppIcon\appiconfg.svg" />
 	  <None Remove="Constants\" />
 	  <None Remove="Base\" />
 	  <None Remove="Pages\" />
@@ -111,5 +111,14 @@
 	  <BundleResource Include="Resources\Styles\SongsStyles.xaml" />
 	  <BundleResource Include="Resources\Images\playpink.png" />
 	  <BundleResource Include="Resources\Images\back.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Resources\AppIcon\appicon.svg">
+	    <ForegroundFile>Resources\AppIcon\appiconfg.svg</ForegroundFile>
+	    <Color>#512BD4</Color>
+	  </None>
+	  <None Update="Resources\AppIcon\appicon.png">
+	    <ForegroundFile>Resources\AppIcon\splash1.png</ForegroundFile>
+	  </None>
 	</ItemGroup>
 </Project>
