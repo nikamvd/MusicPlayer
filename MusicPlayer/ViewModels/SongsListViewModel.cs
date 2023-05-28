@@ -60,8 +60,11 @@ namespace MusicPlayer.ViewModels
         private async void InitializeSongsList()
         {
             IsRunning = true;
-            var songs = await _songsService.GetSongs();
-            Songs = songs.ToList();
+            if(Songs == null || Songs.Count <= 0)
+            {
+                var songs = await _songsService.GetSongs();
+                Songs = songs.ToList();
+            }
             FilteredSongs = Songs;
             IsRunning = false;
         }
