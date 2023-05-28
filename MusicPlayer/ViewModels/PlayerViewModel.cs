@@ -14,6 +14,38 @@ namespace MusicPlayer.ViewModels
             SelectedSong = selectedSong;
             Songs = songs;
             BackCommand = new Command(async () => await NavigateBack());
+            ShuffleCommand = new Command(() => ShuffleSong());
+            PrevCommand = new Command(() => PlayPrevSong());
+            NextCommand = new Command(() => PlayNextSong());
+        }
+
+        private void PlayNextSong()
+        {
+            int index = Songs.IndexOf(SelectedSong);
+            int nextIndex = index + 1;
+            if (nextIndex > Songs.Count - 1)
+            {
+                nextIndex = 0;
+            }
+            SelectedSong = Songs[nextIndex];
+        }
+
+        private void PlayPrevSong()
+        {
+            int index = Songs.IndexOf(SelectedSong);
+            int prevIndex = index - 1;
+            if(prevIndex < 0)
+            {
+                prevIndex = Songs.Count - 1;
+            }
+            SelectedSong = Songs[prevIndex];
+        }
+
+        private void ShuffleSong()
+        {
+            var random = new Random();
+            var index = random.Next(0, Songs.Count - 1);
+            SelectedSong = Songs[index];
         }
 
         private Song _selectedSong;
@@ -67,7 +99,7 @@ namespace MusicPlayer.ViewModels
 
         public void OnAppearing()
         {
-            
+
         }
 
         public void OnDisappearing()
@@ -80,6 +112,27 @@ namespace MusicPlayer.ViewModels
         {
             get => _disconnectCommand;
             set { SetProperty(ref _disconnectCommand, value); }
+        }
+
+        private ICommand _shuffleCommand;
+        public ICommand ShuffleCommand
+        {
+            get => _shuffleCommand;
+            set { SetProperty(ref _shuffleCommand, value); }
+        }
+
+        private ICommand _prevCommand;
+        public ICommand PrevCommand
+        {
+            get => _prevCommand;
+            set { SetProperty(ref _prevCommand, value); }
+        }
+
+        private ICommand _nextCommand;
+        public ICommand NextCommand
+        {
+            get => _nextCommand;
+            set { SetProperty(ref _nextCommand, value); }
         }
     }
 }

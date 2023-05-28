@@ -33,12 +33,14 @@ namespace MusicPlayer.ViewModels
                 return;
             }
 
+            IsRunning = true;
             PlayerViewPage playerViewPage = new PlayerViewPage()
             {
                 BindingContext = new PlayerViewModel(selectedSong, Songs)
             };
             await Navigation.PushAsync(playerViewPage, false);
             SelectedSong = null;
+            IsRunning = false;
         }
 
         private List<Song> _songs;
@@ -57,10 +59,11 @@ namespace MusicPlayer.ViewModels
 
         private async void InitializeSongsList()
         {
+            IsRunning = true;
             var songs = await _songsService.GetSongs();
             Songs = songs.ToList();
-            FilteredSongs = new List<Song>();
-            FilteredSongs.AddRange(Songs);
+            FilteredSongs = Songs;
+            IsRunning = false;
         }
 
         public void OnAppearing()
@@ -111,6 +114,13 @@ namespace MusicPlayer.ViewModels
                     Search(string.Empty);
                 }
             }
+        }
+
+        private bool _isRunning;
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set { SetProperty(ref _isRunning, value); }
         }
     }
 }

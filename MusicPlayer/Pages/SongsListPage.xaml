@@ -6,16 +6,36 @@
              xmlns:mctBehaviors="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="MusicPlayer.Pages.SongsListPage"
              Title="Select a Song">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="#FE43AB" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
     <Page.Behaviors>
         <mctBehaviors:StatusBarBehavior StatusBarColor="#FE43AB"></mctBehaviors:StatusBarBehavior>
     </Page.Behaviors>
-    <VerticalStackLayout Spacing="20">
-        <!--<SearchBar x:Name="searchBar" BackgroundColor="White" Placeholder="search by song or film"
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <ActivityIndicator IsRunning="{Binding IsRunning}" Color="#FE43AB" VerticalOptions="Center"></ActivityIndicator>
+        <VerticalStackLayout Spacing="20">
+            <!--<SearchBar x:Name="searchBar" BackgroundColor="White" Placeholder="search by song or film"
                    SearchCommand="{Binding SearchSong}"
                    SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>-->
-        <SearchBar BackgroundColor="White" Placeholder="search by song or film"
-                   Text="{Binding SearchText, Mode=TwoWay}" />
-        <CollectionView ItemsSource="{Binding FilteredSongs}" SelectionMode="Single"
+
+            <SearchBar BackgroundColor="White" Placeholder="search by song or film"
+                   Text="{Binding SearchText, Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
+            <CollectionView ItemsSource="{Binding FilteredSongs}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedSong}"
                             SelectionChangedCommand="{Binding SongSelectedCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
@@ -39,11 +59,12 @@
                             <!--<Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Source="playpink.png" Margin="0,0,15,0"/>-->
 
                             <Label Grid.Row="1" Grid.Column="1" Text="{Binding FilmName}" Style="{StaticResource Label_SongName}" />
-                        
+
                             <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BoxView_Separator}" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
 </base:BaseContentPage>

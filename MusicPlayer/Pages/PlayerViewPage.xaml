@@ -8,6 +8,7 @@
              xmlns:converters="clr-namespace:MusicPlayer.Converters"
              Shell.NavBarIsVisible="False"
              BackgroundImageSource="potrait.png"
+             x:Name="playerViewPage"
              x:Class="MusicPlayer.Pages.PlayerViewPage">
     <ContentPage.Resources>
         <toolkit:TimeSpanToSecondsConverter x:Key="TimeSpanConverter" />
@@ -15,7 +16,7 @@
     </ContentPage.Resources>
     <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
@@ -78,8 +79,8 @@
         </VerticalStackLayout>
         <HorizontalStackLayout Grid.Row="5" Grid.Column="1" HorizontalOptions="Center" BindingContext="{x:Reference songPlayer}">
             <HorizontalStackLayout Spacing="10">
-                <ImageButton Source="repeat.png"></ImageButton>
-                <ImageButton Source="prev.png"></ImageButton>
+                <ImageButton Source="repeat.png" Command="{Binding Path=BindingContext.ShuffleCommand, Source={x:Reference playerViewPage}}"></ImageButton>
+                <ImageButton Source="prev.png" Command="{Binding Path=BindingContext.PrevCommand, Source={x:Reference playerViewPage}}"></ImageButton>
             </HorizontalStackLayout>
             <ImageButton x:Name="btnPlay" Source="play.png">
                 <ImageButton.Triggers>
@@ -110,7 +111,7 @@
                 </ImageButton.Triggers>
             </ImageButton>
             <HorizontalStackLayout Spacing="10">
-                <ImageButton Source="next.png"></ImageButton>
+                <ImageButton Source="next.png" Command="{Binding Path=BindingContext.NextCommand, Source={x:Reference playerViewPage}}"></ImageButton>
                 <ImageButton Source="volume.png"></ImageButton>
             </HorizontalStackLayout>
         </HorizontalStackLayout>

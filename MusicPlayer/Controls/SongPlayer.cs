@@ -11,6 +11,7 @@ namespace MusicPlayer.Controls
     {
         public SongPlayer()
         {
+            ShouldAutoPlay = true;
             PlayOrPauseCommand = new Command(ExecutePlayOrPauseCommand);
             DragStartedCommand = new Command(ExecuteDragStartedCommand);
             DragCompletedCommand = new Command(ExecuteDragCompletedCommand);
