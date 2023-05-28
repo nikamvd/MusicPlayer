@@ -17,6 +17,7 @@ namespace MusicPlayer.ViewModels
             ShuffleCommand = new Command(() => ShuffleSong());
             PrevCommand = new Command(() => PlayPrevSong());
             NextCommand = new Command(() => PlayNextSong());
+            SongFinishedCommand = new Command(() => PlayNextSong());
         }
 
         private void PlayNextSong()
@@ -133,6 +134,13 @@ namespace MusicPlayer.ViewModels
         {
             get => _nextCommand;
             set { SetProperty(ref _nextCommand, value); }
+        }
+
+        private ICommand _songFinishedCommand;
+        public ICommand SongFinishedCommand
+        {
+            get => _songFinishedCommand;
+            set { SetProperty(ref _songFinishedCommand, value); }
         }
     }
 }

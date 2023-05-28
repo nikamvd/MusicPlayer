@@ -35,6 +35,11 @@
                              DragCompletedCommand="{Binding Source={x:Reference Name=durationSlider}, Path=DragCompletedCommand}"
                              SliderPosition="{Binding Source={x:Reference Name=durationSlider}, Path=Value}" IsVisible="False"
                              DisconnectCommand="{Binding DisconnectCommand}">
+            <controls:SongPlayer.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    EventName="MediaEnded"
+                    Command="{Binding SongFinishedCommand}" />
+            </controls:SongPlayer.Behaviors>
         </controls:SongPlayer>
         <ImageButton Grid.Row="0" Grid.Column="1" Source="back.png" HorizontalOptions="Start" Command="{Binding BackCommand}"></ImageButton>
         <toolkit:AvatarView Grid.Row="1" Grid.Column="1"
