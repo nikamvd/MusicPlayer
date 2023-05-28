@@ -28,14 +28,14 @@
     </Page.Behaviors>
     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
         <ActivityIndicator IsRunning="{Binding IsRunning}" Color="#FE43AB" VerticalOptions="Center"></ActivityIndicator>
-        <VerticalStackLayout Spacing="20">
-            <!--<SearchBar x:Name="searchBar" BackgroundColor="White" Placeholder="search by song or film"
-                   SearchCommand="{Binding SearchSong}"
-                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>-->
-
-            <SearchBar BackgroundColor="White" Placeholder="search by song or film"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <SearchBar Grid.Row="0" BackgroundColor="White" Placeholder="search by song or film"
                    Text="{Binding SearchText, Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
-            <CollectionView ItemsSource="{Binding FilteredSongs}" SelectionMode="Single"
+            <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredSongs}" SelectionMode="Single"
                             SelectedItem="{Binding SelectedSong}"
                             SelectionChangedCommand="{Binding SongSelectedCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
@@ -65,6 +65,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
+        </Grid>
     </Grid>
 </base:BaseContentPage>
